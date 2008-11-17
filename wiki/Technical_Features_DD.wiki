@@ -12,8 +12,9 @@ This document should contain list of important technical features. Especially th
   * Own model/object format
     * Keyframe animations
     * Vertices/Normals/TexCoords
-      * Preferably pre-order for VBO
+      * Preferably pre-ordered for VBOs
     * Name(s) of material script(s)
+    * Each material => one mesh => one VBO
   * Material scripts
     * Textures/shaders
   * Cg Shader support
