@@ -49,15 +49,26 @@ int clsFilesystem::close()
   else
     return -1;
 }
-int clsFilesystem::get(std::string pItem)
+bool clsFilesystem::exists(std::string pName)
+{
+  FILE* lFp=NULL;
+  std::string lBuffer=mDir+pName;
+  lFp=fopen(lBuffer.c_str(),"rb");
+  if (lFp!=NULL)
+    {
+      fclose(lFp);
+      return true;
+    }
+  return false;
+}
+int clsFilesystem::get(std::string pName)
 {
   close();
-  std::string lBuffer;
-  lBuffer=mDir+pItem;
+  std::string lBuffer=mDir+pName;
   mFile=fopen(lBuffer.c_str(),"rb");
   if (mFile==0)
     {
-      fprintf(stderr,"Error opening %s\n",pItem.c_str());
+      fprintf(stderr,"Error opening %s\n",lBuffer.c_str());
       return -1;
     }
   return 0;

@@ -36,7 +36,8 @@ namespace Sroubot
         ~clsFilesystem();
         int open(std::string pSourceIdentificator);
         int close();
-        int get(std::string pItem);
+        bool exists(std::string pName);
+        int get(std::string pName);
         unsigned int seek(unsigned long pOffset);
         unsigned int tell();
         int read(void *pBuffer, unsigned int pCount);
