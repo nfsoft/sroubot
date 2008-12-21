@@ -27,6 +27,7 @@ namespace Sroubot
     class clsDataSource
       {
       public:
+        virtual ~clsDataSource() {}
         virtual int open(std::string pSourceIdentificator) = 0;
         virtual int close() = 0;
         virtual bool exists(std::string pName) = 0;
