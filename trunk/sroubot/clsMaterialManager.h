@@ -17,25 +17,26 @@
 
 */
 
-#ifndef _CLSDATASOURCE_H_
-#define _CLSDATASOURCE_H_
+#ifndef _CLSMATERIALMANAGER_H_
+#define _CLSMATERIALMANAGER_H_
 
 #include <string>
+#include <vector>
+
+#include "clsMaterial.h"
 
 namespace Sroubot
 {
-    class clsDataSource
+    class clsMaterialManager
     {
+    private:
+        clsDataSource* mDataSource;
+        std::vector<clsMaterial*> mMaterialPool;
+
     public:
-        virtual ~clsDataSource() {}
-        virtual int open(std::string pSourceIdentificator) = 0;
-        virtual int close() = 0;
-        virtual bool exists(std::string pName) = 0;
-        virtual int get(std::string pName) = 0;
-        virtual unsigned int seek(unsigned long pOffset) = 0;
-        virtual unsigned int tell() = 0;
-        virtual int read(void *pBuffer, unsigned int pCount) = 0;
-        virtual unsigned int size() = 0;
+        void injectDataSource(clsDataSource* pDataSource);
+        clsMaterial* loadMaterial(std::string* pFilename);
+        clsMaterial* duplicateMaterial(clsMaterial* pModel);
     };
 }
 

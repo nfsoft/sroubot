@@ -17,26 +17,30 @@
 
 */
 
-#ifndef _CLSDATASOURCE_H_
-#define _CLSDATASOURCE_H_
+#include <math.h>
 
-#include <string>
+#include "clsMath.h"
 
-namespace Sroubot
+using namespace Sroubot;
+
+float clsMath::v3_norm(float* pV)
 {
-    class clsDataSource
-    {
-    public:
-        virtual ~clsDataSource() {}
-        virtual int open(std::string pSourceIdentificator) = 0;
-        virtual int close() = 0;
-        virtual bool exists(std::string pName) = 0;
-        virtual int get(std::string pName) = 0;
-        virtual unsigned int seek(unsigned long pOffset) = 0;
-        virtual unsigned int tell() = 0;
-        virtual int read(void *pBuffer, unsigned int pCount) = 0;
-        virtual unsigned int size() = 0;
-    };
+    return sqrt(pV[0]*pV[0]+pV[1]*pV[1]+pV[2]*pV[2]);
 }
-
-#endif
+void clsMath::v3_normalize(float* pV)
+{
+    float lNorm=v3_norm(pV);
+    pV[0]/=lNorm;
+    pV[1]/=lNorm;
+    pV[2]/=lNorm;
+}
+float clsMath::v3_dotProduct(float* pV1, float* pV2)
+{
+    return pV1[0]*pV2[0]+pV1[1]*pV2[1]+pV1[2]*pV2[2];
+}
+void clsMath::v3_crossProduct(float* pV1, float* pV2, float* pV3)
+{
+    pV3[0]=pV1[0]*pV2[0];
+    pV3[1]=pV1[1]*pV2[1];
+    pV3[2]=pV1[2]*pV2[2];
+}

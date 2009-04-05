@@ -25,13 +25,13 @@
 #include <string>
 
 namespace Sroubot
-  {
+{
     class clsFilesystem: public clsDataSource
-      {
-      protected:
+    {
+    protected:
         std::string mDir;
         FILE* mFile;
-      public:
+    public:
         clsFilesystem();
         ~clsFilesystem();
         int open(std::string pSourceIdentificator);
@@ -42,7 +42,7 @@ namespace Sroubot
         unsigned int tell();
         int read(void *pBuffer, unsigned int pCount);
         unsigned int size();
-      };
-  }
+    };
+}
 
 #endif

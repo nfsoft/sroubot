@@ -17,25 +17,39 @@
 
 */
 
-#ifndef _CLSDATASOURCE_H_
-#define _CLSDATASOURCE_H_
+#ifndef _CLSAPPLICATION_H_
+#define _CLSAPPLICATION_H_
 
-#include <string>
+#include <cstdlib>
+#include <SDL/SDL.h>
+#include <SDL/SDL_opengl.h>
+#include <stack>
 
 namespace Sroubot
 {
-    class clsDataSource
+    class clsApplication;
+    class clsGameState;
+}
+#include "clsGameState.h"
+#include "clsDebugGameState.h"
+
+namespace Sroubot
+{
+
+    class clsApplication
     {
+    private:
+        bool mRun;
+        SDL_Surface* mScreen;
+        std::stack<clsGameState*> mGSStack;
     public:
-        virtual ~clsDataSource() {}
-        virtual int open(std::string pSourceIdentificator) = 0;
-        virtual int close() = 0;
-        virtual bool exists(std::string pName) = 0;
-        virtual int get(std::string pName) = 0;
-        virtual unsigned int seek(unsigned long pOffset) = 0;
-        virtual unsigned int tell() = 0;
-        virtual int read(void *pBuffer, unsigned int pCount) = 0;
-        virtual unsigned int size() = 0;
+        clsApplication();
+        ~clsApplication();
+        int setupSDL();
+        int setupOpenGL();
+        void pushGS(clsGameState* pGameState);
+        void popGS();
+        int run();
     };
 }
 

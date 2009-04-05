@@ -17,25 +17,29 @@
 
 */
 
-#ifndef _CLSDATASOURCE_H_
-#define _CLSDATASOURCE_H_
+#ifndef _CLSGAMESTATE_H_
+#define _CLSGAMESTATE_H_
 
-#include <string>
+#include "clsApplication.h"
 
 namespace Sroubot
 {
-    class clsDataSource
+    class clsGameState
     {
+    protected:
+        clsApplication* mApp;
     public:
-        virtual ~clsDataSource() {}
-        virtual int open(std::string pSourceIdentificator) = 0;
-        virtual int close() = 0;
-        virtual bool exists(std::string pName) = 0;
-        virtual int get(std::string pName) = 0;
-        virtual unsigned int seek(unsigned long pOffset) = 0;
-        virtual unsigned int tell() = 0;
-        virtual int read(void *pBuffer, unsigned int pCount) = 0;
-        virtual unsigned int size() = 0;
+        ~clsGameState()
+        {
+            if (mApp) fprintf(stderr,"clsGameState was not destroyed properly!");
+        }
+        virtual int init() = 0;
+        virtual void pause() = 0;
+        virtual void resume() = 0;
+        virtual void destroy() = 0;
+        virtual void processEvent(SDL_Event pEvent) = 0;
+        virtual void processLogic() = 0;
+        virtual void processGraphics() = 0;
     };
 }
 
