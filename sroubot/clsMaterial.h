@@ -17,25 +17,20 @@
 
 */
 
-#ifndef _CLSDATASOURCE_H_
-#define _CLSDATASOURCE_H_
+#ifndef _CLSMATERIAL_H_
+#define _CLSMATERIAL_H_
 
-#include <string>
+#include <SDL/SDL_opengl.h>
 
 namespace Sroubot
 {
-    class clsDataSource
+
+    class clsMaterial
     {
+    private:
+
     public:
-        virtual ~clsDataSource() {}
-        virtual int open(std::string pSourceIdentificator) = 0;
-        virtual int close() = 0;
-        virtual bool exists(std::string pName) = 0;
-        virtual int get(std::string pName) = 0;
-        virtual unsigned int seek(unsigned long pOffset) = 0;
-        virtual unsigned int tell() = 0;
-        virtual int read(void *pBuffer, unsigned int pCount) = 0;
-        virtual unsigned int size() = 0;
+        void useMe();
     };
 }
 

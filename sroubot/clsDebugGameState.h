@@ -17,26 +17,38 @@
 
 */
 
-#ifndef _CLSDATASOURCE_H_
-#define _CLSDATASOURCE_H_
+#ifndef _CLSDEBUGGAMESTATE_H_
+#define _CLSDEBUGGAMESTATE_H_
 
-#include <string>
+#include "clsGameState.h"
+
+#include "clsFilesystem.h"
+#include "clsSceneManager.h"
+#include "clsMaterialManager.h"
 
 namespace Sroubot
 {
-    class clsDataSource
+    class clsDebugGameState: public clsGameState
     {
+    private:
+        clsSceneManager* mSceneManager;
+        clsMaterialManager* mMaterialManager;
+        clsDataSource* mDataSource;
+        float mRot;
     public:
-        virtual ~clsDataSource() {}
-        virtual int open(std::string pSourceIdentificator) = 0;
-        virtual int close() = 0;
-        virtual bool exists(std::string pName) = 0;
-        virtual int get(std::string pName) = 0;
-        virtual unsigned int seek(unsigned long pOffset) = 0;
-        virtual unsigned int tell() = 0;
-        virtual int read(void *pBuffer, unsigned int pCount) = 0;
-        virtual unsigned int size() = 0;
+        clsDebugGameState(const clsApplication* pApp)
+        {
+            mApp=(clsApplication*)pApp;
+        }
+        int init();
+        void pause();
+        void resume();
+        void destroy();
+        void processEvent(SDL_Event pEvent);
+        void processLogic();
+        void processGraphics();
     };
 }
 
 #endif
+

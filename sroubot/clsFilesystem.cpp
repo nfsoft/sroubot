@@ -25,72 +25,72 @@ using namespace Sroubot;
 
 clsFilesystem::clsFilesystem()
 {
-  mDir="";
-  mFile=0;
+    mDir="";
+    mFile=0;
 }
 clsFilesystem::~clsFilesystem()
 {
-  close();
+    close();
 }
 int clsFilesystem::open(std::string pSourceIdentificator)
 {
-  mDir=pSourceIdentificator;
-  close();
-  return 0;
+    mDir=pSourceIdentificator;
+    close();
+    return 0;
 }
 int clsFilesystem::close()
 {
-  if (mFile)
+    if (mFile)
     {
-      fclose(mFile);
-      mFile=0;
-      return 0;
+        fclose(mFile);
+        mFile=0;
+        return 0;
     }
-  else
-    return -1;
+    else
+        return -1;
 }
 bool clsFilesystem::exists(std::string pName)
 {
-  FILE* lFp=NULL;
-  std::string lBuffer=mDir+pName;
-  lFp=fopen(lBuffer.c_str(),"rb");
-  if (lFp!=NULL)
+    FILE* lFp=NULL;
+    std::string lBuffer=mDir+pName;
+    lFp=fopen(lBuffer.c_str(),"rb");
+    if (lFp!=NULL)
     {
-      fclose(lFp);
-      return true;
+        fclose(lFp);
+        return true;
     }
-  return false;
+    return false;
 }
 int clsFilesystem::get(std::string pName)
 {
-  close();
-  std::string lBuffer=mDir+pName;
-  mFile=fopen(lBuffer.c_str(),"rb");
-  if (mFile==0)
+    close();
+    std::string lBuffer=mDir+pName;
+    mFile=fopen(lBuffer.c_str(),"rb");
+    if (mFile==0)
     {
-      fprintf(stderr,"Error opening %s\n",lBuffer.c_str());
-      return -1;
+        fprintf(stderr,"Error opening %s\n",lBuffer.c_str());
+        return -1;
     }
-  return 0;
+    return 0;
 }
 unsigned int clsFilesystem::seek(unsigned long pOffset)
 {
-  return fseek(mFile,pOffset,SEEK_SET);
+    return fseek(mFile,pOffset,SEEK_SET);
 }
 unsigned int clsFilesystem::tell()
 {
-  return ftell(mFile);
+    return ftell(mFile);
 }
 int clsFilesystem::read(void *pBuffer, unsigned int pCount)
 {
-  return (int)fread(pBuffer,1,pCount,mFile);
+    return (int)fread(pBuffer,1,pCount,mFile);
 }
 unsigned int clsFilesystem::size()
 {
-  long int lPos, lSize;
-  lPos=ftell(mFile);
-  fseek(mFile, 0, SEEK_END);
-  lSize=ftell(mFile);
-  fseek(mFile,lPos,SEEK_SET);
-  return lSize;
+    long int lPos, lSize;
+    lPos=ftell(mFile);
+    fseek(mFile, 0, SEEK_END);
+    lSize=ftell(mFile);
+    fseek(mFile,lPos,SEEK_SET);
+    return lSize;
 }

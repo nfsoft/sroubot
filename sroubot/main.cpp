@@ -17,26 +17,16 @@
 
 */
 
-#ifndef _CLSDATASOURCE_H_
-#define _CLSDATASOURCE_H_
+#include "clsApplication.h"
 
-#include <string>
+using namespace Sroubot;
 
-namespace Sroubot
+int main(int argc, char** argv)
 {
-    class clsDataSource
-    {
-    public:
-        virtual ~clsDataSource() {}
-        virtual int open(std::string pSourceIdentificator) = 0;
-        virtual int close() = 0;
-        virtual bool exists(std::string pName) = 0;
-        virtual int get(std::string pName) = 0;
-        virtual unsigned int seek(unsigned long pOffset) = 0;
-        virtual unsigned int tell() = 0;
-        virtual int read(void *pBuffer, unsigned int pCount) = 0;
-        virtual unsigned int size() = 0;
-    };
-}
+    freopen("stdout.txt","w",stdout);
+    freopen("stderr.txt","w",stderr);
 
-#endif
+    clsApplication lApp;
+
+    return lApp.run();
+}

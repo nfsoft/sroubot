@@ -17,26 +17,44 @@
 
 */
 
-#ifndef _CLSDATASOURCE_H_
-#define _CLSDATASOURCE_H_
+#ifndef _CLSSCENENODE_H_
+#define _CLSSCENENODE_H_
 
-#include <string>
+#include <vector>
+
+#include "clsModel.h"
 
 namespace Sroubot
 {
-    class clsDataSource
+    class clsSceneNode;
+    class clsSceneNode
     {
+    private:
+        clsModel* mModel;
+
+        std::vector<clsSceneNode*> mChildrenPool;
+
+        float mPos[3];
+        float mRot[4];
+        float mSca[3];
     public:
-        virtual ~clsDataSource() {}
-        virtual int open(std::string pSourceIdentificator) = 0;
-        virtual int close() = 0;
-        virtual bool exists(std::string pName) = 0;
-        virtual int get(std::string pName) = 0;
-        virtual unsigned int seek(unsigned long pOffset) = 0;
-        virtual unsigned int tell() = 0;
-        virtual int read(void *pBuffer, unsigned int pCount) = 0;
-        virtual unsigned int size() = 0;
+        clsSceneNode();
+        void attachModel(clsModel* pModel);
+        void detachModel();
+        void attachChild(clsSceneNode* pChild);
+        void detachChild(clsSceneNode* pChild);
+
+        void setPos(float x, float y, float z);
+        void setRot(float x, float y, float z, float a);
+        void setSca(float x, float y, float z);
+
+        float* getPos();
+        float* getRot();
+        float* getSca();
+
+        void draw(PFNGLBINDBUFFERARBPROC pProc);
     };
 }
+
 
 #endif

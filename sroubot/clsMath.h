@@ -17,26 +17,22 @@
 
 */
 
-#ifndef _CLSDATASOURCE_H_
-#define _CLSDATASOURCE_H_
-
-#include <string>
+#ifndef _CLSMATH_H_
+#define _CLSMATH_H_
 
 namespace Sroubot
 {
-    class clsDataSource
+
+    class clsMath
     {
     public:
-        virtual ~clsDataSource() {}
-        virtual int open(std::string pSourceIdentificator) = 0;
-        virtual int close() = 0;
-        virtual bool exists(std::string pName) = 0;
-        virtual int get(std::string pName) = 0;
-        virtual unsigned int seek(unsigned long pOffset) = 0;
-        virtual unsigned int tell() = 0;
-        virtual int read(void *pBuffer, unsigned int pCount) = 0;
-        virtual unsigned int size() = 0;
+        static float v3_norm(float* pV);
+        static void v3_normalize(float* pV);
+        static float v3_dotProduct(float* pV1, float* pV2);
+        static void v3_crossProduct(float* pV1, float* pV2, float* pV3);
     };
 }
 
+
 #endif
+
