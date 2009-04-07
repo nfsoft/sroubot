@@ -16,27 +16,19 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef _CLSMATERIALMANAGER_H_
-#define _CLSMATERIALMANAGER_H_
+#include "clsMaterialManager.h"
 
-#include <string>
-#include <map>
+using namespace Sroubot;
 
-#include "clsDataSource.h"
-#include "clsMaterial.h"
-
-namespace Sroubot
+void clsMaterialManager::injectDataSource(clsDataSource* pDataSource)
 {
-	class clsMaterialManager
-	{
-	private:
-		clsDataSource* mDataSource;
-		std::map<std::string,clsMaterial*> mMaterialPool;
-	public:
-		void injectDataSource(clsDataSource* pDataSource);
-		signed int loadMaterialScript(const std::string pFilename);
-		clsMaterial* getMaterial(const std::string pMaterialName);
-	};
+	mDataSource=pDataSource;
 }
-
-#endif
+int clsMaterialManager::loadMaterialScript(const std::string pFilename)
+{
+	return 0;
+}
+clsMaterial* clsMaterialManager::getMaterial(const std::string pMaterialName)
+{
+	return mMaterialPool.find(pMaterialName)->second;
+}

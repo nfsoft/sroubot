@@ -33,6 +33,8 @@ namespace Sroubot
 		clsSceneManager* mSceneManager;
 		clsMaterialManager* mMaterialManager;
 		clsDataSource* mDataSource;
+
+		clsSceneNode* mNode;
 		float mRot;
 	public:
 		clsDebugGameState(const clsApplication* pApp)
