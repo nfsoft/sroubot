@@ -37,7 +37,7 @@ clsSceneManager::clsSceneManager()
 	mCameraNode=new clsSceneNode();
 	mCameraTarget=new clsSceneNode();
 
-	mCameraNode->setPos(30,30,30);
+	mCameraNode->setPos(5,5,5);
 	mCameraTarget->setPos(0,0,0);
 }
 
@@ -135,7 +135,7 @@ clsModel* clsSceneManager::loadModel(const std::string pFilename)
 		lModel->injectMesh(i,&lMesh);
 	}
 
-	mModelPool.push_back(lModel);
+	mModelPool.insert(std::pair<std::string,clsModel*>(pFilename, lModel));
 
 	return lModel;
 }

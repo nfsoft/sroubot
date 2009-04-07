@@ -28,6 +28,7 @@ clsSceneNode::clsSceneNode()
 	mRot[0]=mRot[1]=mRot[2]=0.0f;
 	mSca[0]=mSca[1]=mSca[2]=1.0f;
 	mModel=NULL;
+	mParent=NULL;
 }
 void clsSceneNode::attachModel(clsModel* pModel)
 {
@@ -36,6 +37,13 @@ void clsSceneNode::attachModel(clsModel* pModel)
 void clsSceneNode::detachModel()
 {
 	mModel=NULL;
+}
+clsSceneNode* clsSceneNode::createChild()
+{
+	clsSceneNode* pNode=new clsSceneNode();
+	attachChild(pNode);
+	pNode->_setParent(this);
+	return pNode;
 }
 void clsSceneNode::attachChild(clsSceneNode* pChild)
 {
@@ -51,6 +59,14 @@ void clsSceneNode::detachChild(clsSceneNode* pChild)
 			mChildrenPool.erase(viter);
 			return;
 		}
+}
+void clsSceneNode::_setParent(clsSceneNode* pParent)
+{
+	mParent=pParent;
+}
+clsSceneNode* clsSceneNode::getParent()
+{
+	return mParent;
 }
 void clsSceneNode::setPos(float x, float y, float z)
 {

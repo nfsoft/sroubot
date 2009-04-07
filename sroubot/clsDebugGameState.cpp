@@ -37,8 +37,10 @@ int clsDebugGameState::init()
 
 	printf("Inits done\n");
 
+	mNode=mSceneManager->getRootNode()->createChild();
+
 	clsModel* lCube=mSceneManager->loadModel("sb.som");
-	mSceneManager->getRootNode()->attachModel(lCube);
+	mNode->attachModel(lCube);
 	if (lCube) printf("Model loaded\n");
 
 	mRot=.0f;
@@ -60,12 +62,14 @@ void clsDebugGameState::processEvent(SDL_Event pEvent)
 	{
 		if (pEvent.key.keysym.sym==SDLK_l) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		if (pEvent.key.keysym.sym==SDLK_f) glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		if (pEvent.key.keysym.sym==SDLK_x) mSceneManager->getRootNode()->setPos(-1,-1,-1);
+		if (pEvent.key.keysym.sym==SDLK_c) mNode->setPos(1,1,1);
 	}
 }
 void clsDebugGameState::processLogic()
 {
-	mRot=SDL_GetTicks()/5.0f;
-	mSceneManager->getRootNode()->setRot(0.0f,1.0f,0.0f,mRot);
+	mRot=SDL_GetTicks()/10.0f;
+	mNode->setRot(.0f,.0f,1.0f,mRot);
 }
 void clsDebugGameState::processGraphics()
 {

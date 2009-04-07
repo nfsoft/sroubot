@@ -20,7 +20,7 @@
 #define _CLSSCENEMANAGER_H_
 
 #include <string>
-#include <vector>
+#include <map>
 
 #include "clsDataSource.h"
 #include "clsModel.h"
@@ -34,7 +34,7 @@ namespace Sroubot
 	private:
 		clsDataSource* mDataSource;
 		clsMaterialManager* mMaterialManager;
-		std::vector<clsModel*> mModelPool;
+		std::map<std::string,clsModel*> mModelPool;
 
 		PFNGLGENBUFFERSARBPROC mglGenBuffersARB;
 		PFNGLBINDBUFFERARBPROC mglBindBufferARB;
@@ -53,7 +53,6 @@ namespace Sroubot
 		void injectDataSource(clsDataSource* pDataSource);
 		void injectMaterialManager(clsMaterialManager* pMaterialManager);
 		clsModel* loadModel(const std::string pFilename);
-		clsModel* duplicateModel(clsModel* pModel);
 		clsSceneNode* getRootNode();
 		clsSceneNode* getCameraNode();
 		clsSceneNode* getCameraTarget();

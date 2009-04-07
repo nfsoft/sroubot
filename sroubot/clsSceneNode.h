@@ -30,7 +30,7 @@ namespace Sroubot
 	{
 	private:
 		clsModel* mModel;
-
+		clsSceneNode* mParent;
 		std::vector<clsSceneNode*> mChildrenPool;
 
 		float mPos[3];
@@ -40,8 +40,11 @@ namespace Sroubot
 		clsSceneNode();
 		void attachModel(clsModel* pModel);
 		void detachModel();
+		clsSceneNode* createChild();
 		void attachChild(clsSceneNode* pChild);
 		void detachChild(clsSceneNode* pChild);
+		void _setParent(clsSceneNode* pParent); //try not to call this directly !
+		clsSceneNode* getParent();
 
 		void setPos(float x, float y, float z);
 		void setRot(float x, float y, float z, float a);
