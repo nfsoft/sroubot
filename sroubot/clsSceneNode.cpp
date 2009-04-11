@@ -29,6 +29,7 @@ clsSceneNode::clsSceneNode()
 	mSca[0]=mSca[1]=mSca[2]=1.0f;
 	mModel=NULL;
 	mParent=NULL;
+	mMat=NULL;
 }
 void clsSceneNode::attachModel(clsModel* pModel)
 {
@@ -59,6 +60,14 @@ void clsSceneNode::detachChild(clsSceneNode* pChild)
 			mChildrenPool.erase(viter);
 			return;
 		}
+}
+void clsSceneNode::setMaterial(clsMaterial* pMat)
+{
+	mMat=pMat;
+}
+clsMaterial* clsSceneNode::getMaterial()
+{
+	return mMat;
 }
 void clsSceneNode::_setParent(clsSceneNode* pParent)
 {
@@ -107,9 +116,13 @@ void clsSceneNode::draw(PFNGLBINDBUFFERARBPROC pProc)
 	glRotatef(mRot[3],mRot[0],mRot[1],mRot[2]);
 	glScalef(mSca[0],mSca[1],mSca[2]);
 
+	if (mMat) mMat->useMe();
 	if (mModel) mModel->draw(pProc);
 	for (std::vector<clsSceneNode*>::iterator viter = mChildrenPool.begin(); viter != mChildrenPool.end(); ++viter)
+	{
+		if (mMat) mMat->useMe(); //this has to be done every iteration, because it probably gets overridden by models attached to each children
 		(*viter)->draw(pProc);
+	}
 
 	glPopMatrix();
 }

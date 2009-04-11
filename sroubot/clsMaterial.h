@@ -27,8 +27,23 @@ namespace Sroubot
 	class clsMaterial
 	{
 	private:
-
+		bool mAmbientUsed;
+		float mAmbient[4];
+		bool mDiffuseUsed;
+		float mDiffuse[4];
+		bool mSpecularUsed;
+		float mSpecular[4];
+		bool mEmissionUsed;
+		float mEmission[4];
+		bool mShininessUsed;
+		float mShininess;
 	public:
+		clsMaterial();
+		void setAmbient(float pR, float pG, float pB, float pA, bool pUsed=true);
+		void setDiffuse(float pR, float pG, float pB, float pA, bool pUsed=true);
+		void setSpecular(float pR, float pG, float pB, float pA, bool pUsed=true);
+		void setEmission(float pR, float pG, float pB, float pA, bool pUsed=true);
+		void setShininess(float pE, bool pUsed=true);
 		void useMe();
 	};
 }

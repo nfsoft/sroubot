@@ -108,6 +108,7 @@ clsModel* clsSceneManager::loadModel(const std::string pFilename)
 		}
 		while (lTmpChar!='\0' && i<80);
 
+		lMesh.mMat=mMaterialManager->getMaterial(lTmpMatName);
 
 		mDataSource->read(&lMesh.numVertices,sizeof(float));
 

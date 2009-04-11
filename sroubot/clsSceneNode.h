@@ -30,6 +30,7 @@ namespace Sroubot
 	{
 	private:
 		clsModel* mModel;
+		clsMaterial* mMat;
 		clsSceneNode* mParent;
 		std::vector<clsSceneNode*> mChildrenPool;
 
@@ -40,6 +41,8 @@ namespace Sroubot
 		clsSceneNode();
 		void attachModel(clsModel* pModel);
 		void detachModel();
+		void setMaterial(clsMaterial* pMat);
+		clsMaterial* getMaterial();
 		clsSceneNode* createChild();
 		void attachChild(clsSceneNode* pChild);
 		void detachChild(clsSceneNode* pChild);
