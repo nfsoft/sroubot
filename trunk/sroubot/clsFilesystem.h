@@ -39,7 +39,9 @@ namespace Sroubot
 		int get(std::string pName);
 		unsigned int seek(unsigned long pOffset);
 		unsigned int tell();
+		bool eof();
 		int read(void *pBuffer, unsigned int pCount);
+		int readLine(void *pBuffer, unsigned int pCount);
 		unsigned int size();
 	};
 }

@@ -80,9 +80,19 @@ unsigned int clsFilesystem::tell()
 {
 	return ftell(mFile);
 }
+bool clsFilesystem::eof()
+{
+	return feof(mFile);
+}
 int clsFilesystem::read(void *pBuffer, unsigned int pCount)
 {
 	return (int)fread(pBuffer,1,pCount,mFile);
+}
+int clsFilesystem::readLine(void *pBuffer, unsigned int pCount)
+{
+	if (!fgets((char*)pBuffer,pCount,mFile))
+		return -(ferror(mFile)!=0); //0 = EOF; -1 = error
+	return strlen((char*)pBuffer);
 }
 unsigned int clsFilesystem::size()
 {

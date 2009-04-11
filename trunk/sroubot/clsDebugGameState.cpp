@@ -35,6 +35,9 @@ int clsDebugGameState::init()
 	mSceneManager->injectMaterialManager(mMaterialManager);
 	mSceneManager->initExts();
 
+	mMaterialManager->injectDataSource(mDataSource);
+	mMaterialManager->loadMaterialScript("debug.mat");
+
 	printf("Inits done\n");
 
 	mNode=mSceneManager->getRootNode()->createChild();

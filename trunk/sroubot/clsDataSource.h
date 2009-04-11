@@ -33,7 +33,9 @@ namespace Sroubot
 		virtual int get(std::string pName) = 0;
 		virtual unsigned int seek(unsigned long pOffset) = 0;
 		virtual unsigned int tell() = 0;
+		virtual bool eof() = 0;
 		virtual int read(void *pBuffer, unsigned int pCount) = 0;
+		virtual int readLine(void *pBuffer, unsigned int pCount) = 0;
 		virtual unsigned int size() = 0;
 	};
 }

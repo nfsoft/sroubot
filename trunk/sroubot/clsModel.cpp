@@ -49,7 +49,7 @@ void clsModel::draw(PFNGLBINDBUFFERARBPROC pProc)
 
 	for (unsigned int i=0;i<mNumMeshes;++i)
 	{
-		//mMeshes[i].mMat->useMe();
+		if (mMeshes[i].mMat) mMeshes[i].mMat->useMe();
 		if (pProc)
 		{
 			pProc(GL_ARRAY_BUFFER_ARB, mMeshes[i].VBOArray);

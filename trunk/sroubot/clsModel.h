@@ -28,8 +28,7 @@ namespace Sroubot
 {
 	struct sMesh
 	{
-		clsMaterial *mMat;
-
+		clsMaterial* mMat;
 		float *mArray;
 		unsigned int *mIndices;
 		unsigned int numVertices;
