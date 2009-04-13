@@ -29,7 +29,13 @@ clsModel::clsModel()
 }
 clsModel::~clsModel()
 {
-	if (mMeshes) free(mMeshes);
+	if (!mMeshes) return;
+	for (unsigned int i=0;i<mNumMeshes;++i)
+	{
+		free(mMeshes[i].mArray);
+		free(mMeshes[i].mIndices);
+	}
+	free(mMeshes);
 }
 void clsModel::allocateMeshes(unsigned int pNumMeshes)
 {
@@ -45,7 +51,6 @@ void clsModel::draw(PFNGLBINDBUFFERARBPROC pProc)
 {
 	glColor3f(0.5f,0.5f,0.5f);
 
-//fprintf(stdout,"drawing..\n");
 
 	for (unsigned int i=0;i<mNumMeshes;++i)
 	{
@@ -57,8 +62,6 @@ void clsModel::draw(PFNGLBINDBUFFERARBPROC pProc)
 			glNormalPointer( GL_FLOAT, 32, (char*)12);
 			//glTexCoordPointer(2, GL_FLOAT, 8, (char*)6);
 
-			//fprintf(stdout,"semidone..\n");
-
 			pProc(GL_ELEMENT_ARRAY_BUFFER_ARB, mMeshes[i].VBOIndices);
 			glDrawElements(GL_TRIANGLES, mMeshes[i].numIndices, GL_UNSIGNED_INT, NULL);
 		}
@@ -67,12 +70,10 @@ void clsModel::draw(PFNGLBINDBUFFERARBPROC pProc)
 			glVertexPointer(3, GL_FLOAT, 32, mMeshes[i].mArray);
 			glNormalPointer( GL_FLOAT, 32, (mMeshes[i].mArray)+3);
 			//glTexCoordPointer(2, GL_FLOAT, 8, (char*)6);
-			//fprintf(stdout,"semidone.h..........\n");
 
 			glDrawElements(GL_TRIANGLES, mMeshes[i].numIndices, GL_UNSIGNED_INT, mMeshes[i].mIndices);
 		}
 	}
 	glPopMatrix();
 
-//fprintf(stdout,"done..\n");
 }

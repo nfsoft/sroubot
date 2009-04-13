@@ -33,6 +33,7 @@ namespace Sroubot
 		clsDataSource* mDataSource;
 		std::map<std::string,clsMaterial*> mMaterialPool;
 	public:
+		~clsMaterialManager();
 		void injectDataSource(clsDataSource* pDataSource);
 		signed int loadMaterialScript(const std::string pFilename);
 		clsMaterial* getMaterial(const std::string pMaterialName);

@@ -31,6 +31,12 @@ clsSceneNode::clsSceneNode()
 	mParent=NULL;
 	mMat=NULL;
 }
+clsSceneNode::~clsSceneNode()
+{
+	for (std::vector<clsSceneNode*>::iterator viter=mChildrenPool.begin();viter!=mChildrenPool.end();++viter)
+		delete (*viter);
+	mChildrenPool.clear();
+}
 void clsSceneNode::attachModel(clsModel* pModel)
 {
 	mModel=pModel;
@@ -52,14 +58,15 @@ void clsSceneNode::attachChild(clsSceneNode* pChild)
 		if (*viter==pChild) return;
 	mChildrenPool.push_back(pChild);
 }
-void clsSceneNode::detachChild(clsSceneNode* pChild)
+bool clsSceneNode::detachChild(clsSceneNode* pChild)
 {
 	for (std::vector<clsSceneNode*>::iterator viter = mChildrenPool.begin(); viter != mChildrenPool.end(); ++viter)
 		if (*viter==pChild)
 		{
 			mChildrenPool.erase(viter);
-			return;
+			return true;
 		}
+	return false;
 }
 void clsSceneNode::setMaterial(clsMaterial* pMat)
 {
