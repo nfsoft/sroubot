@@ -39,13 +39,14 @@ namespace Sroubot
 		float mSca[3];
 	public:
 		clsSceneNode();
+		~clsSceneNode();
 		void attachModel(clsModel* pModel);
 		void detachModel();
 		void setMaterial(clsMaterial* pMat);
 		clsMaterial* getMaterial();
 		clsSceneNode* createChild();
 		void attachChild(clsSceneNode* pChild);
-		void detachChild(clsSceneNode* pChild);
+		bool detachChild(clsSceneNode* pChild);
 		void _setParent(clsSceneNode* pParent); //try not to call this directly !
 		clsSceneNode* getParent();
 

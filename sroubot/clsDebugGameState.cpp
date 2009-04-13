@@ -36,17 +36,21 @@ int clsDebugGameState::init()
 	mSceneManager->initExts();
 
 	mMaterialManager->injectDataSource(mDataSource);
-	mMaterialManager->loadMaterialScript("debug.mat");
+	mMaterialManager->loadMaterialScript("debugmaterials.mat");
 
 	printf("Inits done\n");
 
 	mNode=mSceneManager->getRootNode()->createChild();
 
-	clsModel* lCube=mSceneManager->loadModel("sb.som");
+	clsModel* lCube=mSceneManager->loadModel("debugmodel.som");
 	mNode->attachModel(lCube);
 	if (lCube) printf("Model loaded\n");
 
 	mRot=.0f;
+
+	mFps=.0f;
+	mFpsLastRecount=SDL_GetTicks();
+	mFpsTicks=0;
 
 	return 0;
 }
@@ -63,18 +67,42 @@ void clsDebugGameState::processEvent(SDL_Event pEvent)
 {
 	if (pEvent.type==SDL_KEYDOWN)
 	{
-		if (pEvent.key.keysym.sym==SDLK_l) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		if (pEvent.key.keysym.sym==SDLK_f) glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		if (pEvent.key.keysym.sym==SDLK_x) mSceneManager->getRootNode()->setPos(-1,-1,-1);
-		if (pEvent.key.keysym.sym==SDLK_c) mNode->setPos(1,1,1);
+		switch (pEvent.key.keysym.sym)
+		{
+			case SDLK_l:
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				break;
+			case SDLK_f:
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				break;
+			case SDLK_x:
+				mSceneManager->getRootNode()->setPos(-1,-1,-1);
+				break;
+			case SDLK_c:
+				mNode->setPos(1,1,1);
+				break;
+			case SDLK_p:
+				printf("FPS: %f\n",mFps);
+				break;
+			default:
+				break;
+		}
 	}
 }
-void clsDebugGameState::processLogic()
+void clsDebugGameState::processLogic(unsigned int pTicks)
 {
-	mRot=SDL_GetTicks()/10.0f;
+	if (pTicks>=mFpsLastRecount+1000)
+	{
+		mFps=mFpsTicks/(float)(pTicks-mFpsLastRecount)*1000.0f;
+		mFpsLastRecount=pTicks;
+		mFpsTicks=0;
+	}
+
+	mRot=pTicks/10.0f;
 	mNode->setRot(.0f,.0f,1.0f,mRot);
 }
 void clsDebugGameState::processGraphics()
 {
 	mSceneManager->draw();
+	mFpsTicks++;
 }

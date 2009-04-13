@@ -65,6 +65,14 @@ int clsApplication::setupOpenGL()
 {
 	printf("Initializing OpenGL\n");
 
+	printf("Info: GL_RENDERER: %s\n",(char *)glGetString(GL_RENDERER));
+	printf("Info: GL_VENDOR: %s\n",(char *)glGetString(GL_VENDOR));
+	printf("Info: GL_VERSION: %s\n",(char *)glGetString(GL_VERSION));
+	printf("Info: GL_EXTENSIONS: %s\n",(char *)glGetString(GL_EXTENSIONS));
+	int lMaxTextureSize;
+	glGetIntegerv(GL_MAX_TEXTURE_SIZE,&lMaxTextureSize);
+	printf("Info: GL_MAX_TEXTURE_SIZE: %i\n",lMaxTextureSize);
+
 	glClearColor( 0.0f, 0.8f, 0.0f, 0.0f );
 
 	glViewport( 0, 0, 640, 480 );
@@ -102,6 +110,8 @@ void clsApplication::pushGS(clsGameState* pGameState)
 }
 void clsApplication::popGS()
 {
+	if (mGSStack.empty()) return;
+	delete mGSStack.top();
 	mGSStack.pop();
 }
 int clsApplication::run()
@@ -121,7 +131,7 @@ int clsApplication::run()
 
 	while (mRun)
 	{
-		mGSStack.top()->processLogic();
+		mGSStack.top()->processLogic(SDL_GetTicks());
 
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		mGSStack.top()->processGraphics();
@@ -146,6 +156,14 @@ int clsApplication::run()
 			}
 		}
 	}
+
+	while (!mGSStack.empty())
+	{
+		mGSStack.top()->destroy();
+		delete mGSStack.top(); //this shouldn't be needed
+		mGSStack.pop();
+	}
+	SDL_Quit();
 
 	return 0;
 }

@@ -43,7 +43,13 @@ clsSceneManager::clsSceneManager()
 
 clsSceneManager::~clsSceneManager()
 {
+	for (std::map<std::string,clsModel*>::iterator viter=mModelPool.begin();viter!=mModelPool.end();++viter)
+		delete viter->second;
+	mModelPool.clear();
+
 	delete mRootNode;
+	delete mCameraNode;
+	delete mCameraTarget;
 }
 
 void clsSceneManager::initExts()
@@ -88,6 +94,7 @@ clsModel* clsSceneManager::loadModel(const std::string pFilename)
 	if (strcmp(lFormat,"SOM")!=0)
 	{
 		fprintf(stderr,"Model is not SOM\n");
+		delete lModel;
 		return NULL;
 	}
 
@@ -123,7 +130,7 @@ clsModel* clsSceneManager::loadModel(const std::string pFilename)
 		//BuildVBO
 		if (mglGenBuffersARB)
 		{
-			//fprintf(stdout,"Generating VBOs\n");
+			//printf("Generating VBOs\n");
 			mglGenBuffersARB(1, &lMesh.VBOArray);
 			mglBindBufferARB(GL_ARRAY_BUFFER_ARB, lMesh.VBOArray);
 			mglBufferDataARB(GL_ARRAY_BUFFER_ARB, lMesh.numVertices*sizeof(float)*8, lMesh.mArray, GL_STATIC_DRAW_ARB);
@@ -132,7 +139,7 @@ clsModel* clsSceneManager::loadModel(const std::string pFilename)
 			mglBindBufferARB(GL_ARRAY_BUFFER_ARB, lMesh.VBOIndices);
 			mglBufferDataARB(GL_ARRAY_BUFFER_ARB, lMesh.numIndices*sizeof(unsigned int), lMesh.mIndices, GL_STATIC_DRAW_ARB);
 		}
-		//fprintf(stdout,"Injecting mesh\n");
+		//printf("Injecting mesh\n");
 		lModel->injectMesh(i,&lMesh);
 	}
 

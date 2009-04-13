@@ -36,6 +36,10 @@ namespace Sroubot
 
 		clsSceneNode* mNode;
 		float mRot;
+
+		float mFps;
+		unsigned int mFpsLastRecount;
+		unsigned int mFpsTicks;
 	public:
 		clsDebugGameState(const clsApplication* pApp)
 		{
@@ -46,7 +50,7 @@ namespace Sroubot
 		void resume();
 		void destroy();
 		void processEvent(SDL_Event pEvent);
-		void processLogic();
+		void processLogic(unsigned int pTicks);
 		void processGraphics();
 	};
 }

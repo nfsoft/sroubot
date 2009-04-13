@@ -22,11 +22,11 @@ using namespace Sroubot;
 
 clsMaterial::clsMaterial()
 {
-	mAmbientUsed=false; mAmbient[0]=.2f; mAmbient[1]=.2f; mAmbient[2]=.2f; mAmbient[3]=1.f;
-	mDiffuseUsed=false; mDiffuse[0]=.8f; mDiffuse[1]=.8f; mDiffuse[2]=.8f; mDiffuse[3]=1.f;
-	mSpecularUsed=false; mSpecular[0]=0.f; mSpecular[1]=0.f; mSpecular[2]=0.f; mSpecular[3]=1.f;
-	mEmissionUsed=false; mEmission[0]=0.f; mEmission[1]=0.f; mEmission[2]=0.f; mEmission[3]=1.f;
-	mShininessUsed=false; mShininess=64.f;
+	mAmbientUsed=true; mAmbient[0]=.2f; mAmbient[1]=.2f; mAmbient[2]=.2f; mAmbient[3]=1.f;
+	mDiffuseUsed=true; mDiffuse[0]=.8f; mDiffuse[1]=.8f; mDiffuse[2]=.8f; mDiffuse[3]=1.f;
+	mSpecularUsed=true; mSpecular[0]=0.f; mSpecular[1]=0.f; mSpecular[2]=0.f; mSpecular[3]=1.f;
+	mEmissionUsed=true; mEmission[0]=0.f; mEmission[1]=0.f; mEmission[2]=0.f; mEmission[3]=1.f;
+	mShininessUsed=true; mShininess=64.f;
 }
 void clsMaterial::setAmbient(float pR, float pG, float pB, float pA, bool pUsed)
 {

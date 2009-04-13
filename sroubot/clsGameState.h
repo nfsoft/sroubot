@@ -37,7 +37,7 @@ namespace Sroubot
 		virtual void resume() = 0;
 		virtual void destroy() = 0;
 		virtual void processEvent(SDL_Event pEvent) = 0;
-		virtual void processLogic() = 0;
+		virtual void processLogic(unsigned int pTicks) = 0;
 		virtual void processGraphics() = 0;
 	};
 }

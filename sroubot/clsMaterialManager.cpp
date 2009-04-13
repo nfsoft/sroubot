@@ -25,6 +25,12 @@
 
 using namespace Sroubot;
 
+clsMaterialManager::~clsMaterialManager()
+{
+	for (std::map<std::string,clsMaterial*>::iterator viter=mMaterialPool.begin();viter!=mMaterialPool.end();viter++)
+		delete viter->second;
+	mMaterialPool.clear();
+}
 void clsMaterialManager::injectDataSource(clsDataSource* pDataSource)
 {
 	mDataSource=pDataSource;
@@ -44,8 +50,8 @@ int clsMaterialManager::loadMaterialScript(const std::string pFilename)
 		lCmd.clear();
 		mDataSource->readLine(lLine,256);
 
-		if (lLine[strlen(lLine)-1]<32) lLine[strlen(lLine)-1]=0; // removes eol characters
-		if (lLine[strlen(lLine)-1]<32) lLine[strlen(lLine)-1]=0; // just in case someone uses cr+lf
+		if (lLine[strlen(lLine)-1]<' ') lLine[strlen(lLine)-1]=0; // removes eol characters
+		if (lLine[strlen(lLine)-1]<' ') lLine[strlen(lLine)-1]=0; // just in case someone uses cr+lf or some other form of two-byte eol
 
 		unsigned int lLength=strlen(lLine);
 		lPos=lLine;
@@ -57,12 +63,17 @@ int clsMaterialManager::loadMaterialScript(const std::string pFilename)
 			lCmd.push_back(std::string(lPos));
 			lPos=lPos2+1;
 		}
+
+/*		for (unsigned int i=0;i<lCmd.size();i++)
+			std::cout << "[" << lCmd[i] << "]";
+		std::cout << std::endl; */
+
 		if (lCmd[0]=="name") {
 			if (lMat)
 			{
 				mMaterialPool.insert(std::pair<std::string,clsMaterial*>(lMatName,lMat));
 				lMatCount++;
-				fprintf(stdout,"Material '%s' loaded.",lMatName.c_str());
+				printf("Material '%s' loaded.\n",lMatName.c_str());
 			}
 			if (lCmd.size()!=2)
 				fprintf(stderr,"Error parsing material script %s (line %u), 'name' element needs 1 argument\n",pFilename.c_str(),lLineCount);
@@ -116,14 +127,19 @@ int clsMaterialManager::loadMaterialScript(const std::string pFilename)
 
 		lLineCount++;
 	}
-
+	if (lMat) //ending last material
+	{
+		mMaterialPool.insert(std::pair<std::string,clsMaterial*>(lMatName,lMat));
+		lMatCount++;
+		printf("Material '%s' loaded.\n",lMatName.c_str());
+	}
 	return lMatCount;
 }
 clsMaterial* clsMaterialManager::getMaterial(const std::string pMaterialName)
 {
 	std::map<std::string,clsMaterial*>::iterator lResult=mMaterialPool.find(pMaterialName);
 	if (lResult==mMaterialPool.end()) {
-		fprintf(stderr,"Material %s not loaded!",pMaterialName.c_str());
+		fprintf(stderr,"Material %s not loaded!\n",pMaterialName.c_str());
 		return NULL;
 	} else
 		return lResult->second;
